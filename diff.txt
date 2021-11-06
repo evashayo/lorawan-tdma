@@ -1,0 +1,41 @@
+Files lorawan/examples/adr-example.cc and lorawan-tdma/examples/adr-example.cc differ
+Files lorawan/examples/aloha-throughput.cc and lorawan-tdma/examples/aloha-throughput.cc differ
+Files lorawan/examples/complete-network-example.cc and lorawan-tdma/examples/complete-network-example.cc differ
+Files lorawan/examples/energy-model-example.cc and lorawan-tdma/examples/energy-model-example.cc differ
+Only in lorawan-tdma/examples: eva-network-tdma-new-v4.cc
+Only in lorawan-tdma/examples: scripts
+Files lorawan/.git/config and lorawan-tdma/.git/config differ
+Files lorawan/.git/HEAD and lorawan-tdma/.git/HEAD differ
+Files lorawan/.git/index and lorawan-tdma/.git/index differ
+Files lorawan/.git/logs/HEAD and lorawan-tdma/.git/logs/HEAD differ
+Only in lorawan/.git/logs/refs/heads: develop
+Only in lorawan-tdma/.git/logs/refs/heads: master
+Files lorawan/.git/logs/refs/remotes/origin/HEAD and lorawan-tdma/.git/logs/refs/remotes/origin/HEAD differ
+Only in lorawan-tdma/.git/objects/pack: pack-03ab80b262a6c35ac634d55b9b6d287321b4361b.idx
+Only in lorawan-tdma/.git/objects/pack: pack-03ab80b262a6c35ac634d55b9b6d287321b4361b.pack
+Only in lorawan/.git/objects/pack: pack-944099ccd9e096455c17e23e157cce16c03804af.idx
+Only in lorawan/.git/objects/pack: pack-944099ccd9e096455c17e23e157cce16c03804af.pack
+Files lorawan/.git/packed-refs and lorawan-tdma/.git/packed-refs differ
+Only in lorawan/.git/refs/heads: develop
+Only in lorawan-tdma/.git/refs/heads: master
+Files lorawan/.git/refs/remotes/origin/HEAD and lorawan-tdma/.git/refs/remotes/origin/HEAD differ
+Only in lorawan/: .github
+Files lorawan/helper/lora-helper.cc and lorawan-tdma/helper/lora-helper.cc differ
+Files lorawan/helper/lora-packet-tracker.cc and lorawan-tdma/helper/lora-packet-tracker.cc differ
+Files lorawan/helper/lorawan-mac-helper.cc and lorawan-tdma/helper/lorawan-mac-helper.cc differ
+Files lorawan/helper/lorawan-mac-helper.h and lorawan-tdma/helper/lorawan-mac-helper.h differ
+Files lorawan/helper/periodic-sender-helper.cc and lorawan-tdma/helper/periodic-sender-helper.cc differ
+Files lorawan/helper/periodic-sender-helper.h and lorawan-tdma/helper/periodic-sender-helper.h differ
+Only in lorawan-tdma/helper: tdma-helper.cc
+Only in lorawan-tdma/helper: tdma-helper.h
+Only in lorawan-tdma/helper: tdma-sender-helper.cc
+Only in lorawan-tdma/helper: tdma-sender-helper.h
+Files lorawan/model/class-a-end-device-lorawan-mac.cc and lorawan-tdma/model/class-a-end-device-lorawan-mac.cc differ
+Files lorawan/model/class-a-end-device-lorawan-mac.h and lorawan-tdma/model/class-a-end-device-lorawan-mac.h differ
+Files lorawan/model/lora-phy.cc and lorawan-tdma/model/lora-phy.cc differ
+Only in lorawan-tdma/model: tdma.cc
+Only in lorawan-tdma/model: tdma.h
+Only in lorawan-tdma/model: tdma-sender.cc
+Only in lorawan-tdma/model: tdma-sender.h
+Files lorawan/README.md and lorawan-tdma/README.md differ
+Files lorawan/wscript and lorawan-tdma/wscript differ

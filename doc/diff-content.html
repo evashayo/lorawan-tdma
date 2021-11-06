@@ -1,0 +1,438 @@
+<html><head><link rel="stylesheet" href="styles.css"/></head><body><div class="diff">diff -bur lorawan/examples/adr-example.cc lorawan-tdma/examples/adr-example.cc
+</div><div class="minus">--- lorawan/examples/adr-example.cc	2020-07-07 09:46:11.291592926 +0300
+</div><div class="plus">+++ lorawan-tdma/examples/adr-example.cc	2020-07-07 09:46:34.623147107 +0300
+</div><div>@@ -234,7 +234,8 @@
+</div><div>   int appPeriodSeconds = 1200;      // One packet every 20 minutes
+</div><div>   PeriodicSenderHelper appHelper = PeriodicSenderHelper ();
+</div><div>   appHelper.SetPeriod (Seconds (appPeriodSeconds));
+</div><div class="minus">-  ApplicationContainer appContainer = appHelper.Install (endDevices);
+</div><div class="plus">+  uint16_t start_times[2]={1, 3};
+</div><div class="plus">+  ApplicationContainer appContainer = appHelper.Install (endDevices, start_times);
+</div><div>   // Do not set spreading factors up: we will wait for the NS to do this
+</div><div>   if (initializeSF)
+</div><div class="diff">diff -bur lorawan/examples/aloha-throughput.cc lorawan-tdma/examples/aloha-throughput.cc
+</div><div class="minus">--- lorawan/examples/aloha-throughput.cc	2020-07-07 09:46:11.291592926 +0300
+</div><div class="plus">+++ lorawan-tdma/examples/aloha-throughput.cc	2020-07-07 09:46:34.623147107 +0300
+</div><div>@@ -197,7 +197,9 @@
+</div><div>   appHelper.SetPacketSize (150);
+</div><div>   Ptr<RandomVariableStream> rv = CreateObjectWithAttributes<UniformRandomVariable> (
+</div><div>       "Min", DoubleValue (0), "Max", DoubleValue (10));
+</div><div class="minus">-  ApplicationContainer appContainer = appHelper.Install (endDevices);
+</div><div class="plus">+  uint16_t start_times[2]={1, 3};
+</div><div class="plus">+  ApplicationContainer appContainer = appHelper.Install (endDevices, start_times);
+</div><div>   appContainer.Start (Seconds (0));
+</div><div>   appContainer.Stop (appStopTime);
+</div><div class="diff">diff -bur lorawan/examples/complete-network-example.cc lorawan-tdma/examples/complete-network-example.cc
+</div><div class="minus">--- lorawan/examples/complete-network-example.cc	2020-07-07 09:46:11.295592849 +0300
+</div><div class="plus">+++ lorawan-tdma/examples/complete-network-example.cc	2020-07-07 09:46:34.623147107 +0300
+</div><div>@@ -280,7 +280,8 @@
+</div><div>   appHelper.SetPacketSize (23);
+</div><div>   Ptr<RandomVariableStream> rv = CreateObjectWithAttributes<UniformRandomVariable> (
+</div><div>       "Min", DoubleValue (0), "Max", DoubleValue (10));
+</div><div class="minus">-  ApplicationContainer appContainer = appHelper.Install (endDevices);
+</div><div class="plus">+  uint16_t start_times[2]={1, 3};
+</div><div class="plus">+  ApplicationContainer appContainer = appHelper.Install (endDevices, start_times);
+</div><div>   appContainer.Start (Seconds (0));
+</div><div>   appContainer.Stop (appStopTime);
+</div><div class="diff">diff -bur lorawan/examples/energy-model-example.cc lorawan-tdma/examples/energy-model-example.cc
+</div><div class="minus">--- lorawan/examples/energy-model-example.cc	2020-07-07 09:46:11.295592849 +0300
+</div><div class="plus">+++ lorawan-tdma/examples/energy-model-example.cc	2020-07-07 09:46:34.623147107 +0300
+</div><div>@@ -142,7 +142,8 @@
+</div><div>   PeriodicSenderHelper periodicSenderHelper;
+</div><div>   periodicSenderHelper.SetPeriod (Seconds (5));
+</div><div class="minus">-  periodicSenderHelper.Install (endDevices);
+</div><div class="plus">+  uint16_t start_times[2]={1, 3};
+</div><div class="plus">+  periodicSenderHelper.Install (endDevices, start_times);
+</div><div>   /************************
+</div><div>    * Install Energy Model *
+</div><div>Only in lorawan-tdma/examples: eva-network-tdma-new-v4.cc
+</div><div>Only in lorawan-tdma/examples: scripts
+</div><div class="diff">diff -bur lorawan/.git/config lorawan-tdma/.git/config
+</div><div class="minus">--- lorawan/.git/config	2020-07-07 09:46:11.287593005 +0300
+</div><div class="plus">+++ lorawan-tdma/.git/config	2020-07-07 09:46:34.615147257 +0300
+</div><div>@@ -4,8 +4,8 @@
+</div><div> 	bare = false
+</div><div> 	logallrefupdates = true
+</div><div> [remote "origin"]
+</div><div class="minus">-	url = https://github.com/signetlabdei/lorawan.git
+</div><div class="plus">+	url = https://github.com/ezrankayamba/lorawan-tdma.git
+</div><div class="minus">-[branch "develop"]
+</div><div class="plus">+[branch "master"]
+</div><div> 	remote = origin
+</div><div class="diff">diff -bur lorawan/.git/HEAD lorawan-tdma/.git/HEAD
+</div><div class="minus">--- lorawan/.git/HEAD	2020-07-07 09:46:11.287593005 +0300
+</div><div class="plus">+++ lorawan-tdma/.git/HEAD	2020-07-07 09:46:34.611147331 +0300
+</div><div>@@ -1 +1 @@
+</div><div>Binary files lorawan/.git/index and lorawan-tdma/.git/index differ
+</div><div class="diff">diff -bur lorawan/.git/logs/HEAD lorawan-tdma/.git/logs/HEAD
+</div><div class="minus">--- lorawan/.git/logs/HEAD	2020-07-07 09:46:11.287593005 +0300
+</div><div class="plus">+++ lorawan-tdma/.git/logs/HEAD	2020-07-07 09:46:34.615147257 +0300
+</div><div>@@ -1 +1 @@
+</div><div class="minus">-0000000000000000000000000000000000000000 a2ab1f78643af5c3de437111ad0a1816dcfb4a7c ezrankayamba <ezrankayamba@gmail.com> 1594104371 +0300	clone: from https://github.com/signetlabdei/lorawan.git
+</div><div class="plus">+0000000000000000000000000000000000000000 7772fe7290852ed3fd8fbadd8110d64e3ba65055 ezrankayamba <ezrankayamba@gmail.com> 1594104394 +0300	clone: from https://github.com/ezrankayamba/lorawan-tdma.git
+</div><div>@@ -1 +1 @@
+</div><div class="minus">-0000000000000000000000000000000000000000 a2ab1f78643af5c3de437111ad0a1816dcfb4a7c ezrankayamba <ezrankayamba@gmail.com> 1594104371 +0300	clone: from https://github.com/signetlabdei/lorawan.git
+</div><div class="plus">+0000000000000000000000000000000000000000 7772fe7290852ed3fd8fbadd8110d64e3ba65055 ezrankayamba <ezrankayamba@gmail.com> 1594104394 +0300	clone: from https://github.com/ezrankayamba/lorawan-tdma.git
+</div><div>Only in lorawan-tdma/.git/objects/pack: pack-03ab80b262a6c35ac634d55b9b6d287321b4361b.idx
+</div><div>Only in lorawan-tdma/.git/objects/pack: pack-03ab80b262a6c35ac634d55b9b6d287321b4361b.pack
+</div><div>Only in lorawan/.git/objects/pack: pack-944099ccd9e096455c17e23e157cce16c03804af.idx
+</div><div>Only in lorawan/.git/objects/pack: pack-944099ccd9e096455c17e23e157cce16c03804af.pack
+</div><div class="diff">diff -bur lorawan/.git/packed-refs lorawan-tdma/.git/packed-refs
+</div><div class="minus">--- lorawan/.git/packed-refs	2020-07-07 09:46:11.287593005 +0300
+</div><div class="plus">+++ lorawan-tdma/.git/packed-refs	2020-07-07 09:46:34.611147331 +0300
+</div><div>@@ -1,10 +1,2 @@
+</div><div> # pack-refs with: peeled fully-peeled sorted 
+</div><div>@@ -1 +1 @@
+</div><div>Only in lorawan/: .github
+</div><div class="diff">diff -bur lorawan/helper/lora-helper.cc lorawan-tdma/helper/lora-helper.cc
+</div><div class="minus">--- lorawan/helper/lora-helper.cc	2020-07-07 09:46:11.295592849 +0300
+</div><div class="plus">+++ lorawan-tdma/helper/lora-helper.cc	2020-07-07 09:46:34.623147107 +0300
+</div><div>@@ -221,13 +221,17 @@
+</div><div>       Ptr<NetDevice> netDevice = object->GetDevice (0);
+</div><div>       Ptr<LoraNetDevice> loraNetDevice = netDevice->GetObject<LoraNetDevice> ();
+</div><div>       NS_ASSERT (loraNetDevice != 0);
+</div><div class="plus">+//      EndDeviceLoraPhy
+</div><div>       Ptr<ClassAEndDeviceLorawanMac> mac = loraNetDevice->GetMac ()->GetObject<ClassAEndDeviceLorawanMac> ();
+</div><div class="plus">+      Ptr<EndDeviceLoraPhy> phy = loraNetDevice->GetPhy ()->GetObject<EndDeviceLoraPhy> ();
+</div><div>       int dr = int(mac->GetDataRate ());
+</div><div>       double txPower = mac->GetTransmissionPower ();
+</div><div>       Vector pos = position->GetPosition ();
+</div><div class="plus">+      EndDeviceLoraPhy::State state=phy->GetState ();
+</div><div>       outputFile << currentTime.GetSeconds () << " "
+</div><div>                  << object->GetId () <<  " "
+</div><div>                  << pos.x << " " << pos.y << " " << dr << " "
+</div><div class="plus">+				 << state << " "
+</div><div>                  << unsigned(txPower) << std::endl;
+</div><div>   // for (NodeContainer::Iterator j = gateways.Begin (); j != gateways.End (); ++j)
+</div><div class="diff">diff -bur lorawan/helper/lora-packet-tracker.cc lorawan-tdma/helper/lora-packet-tracker.cc
+</div><div class="minus">--- lorawan/helper/lora-packet-tracker.cc	2020-07-07 09:46:11.295592849 +0300
+</div><div class="plus">+++ lorawan-tdma/helper/lora-packet-tracker.cc	2020-07-07 09:46:34.623147107 +0300
+</div><div>@@ -56,8 +56,7 @@
+</div><div>       status.senderId = Simulator::GetContext ();
+</div><div>       status.receivedTime = Time::Max ();
+</div><div class="minus">-      m_macPacketTracker.insert (std::pair<Ptr<Packet const>, MacPacketStatus>
+</div><div class="minus">-                                   (packet, status));
+</div><div class="plus">+      m_macPacketTracker.insert (std::pair<Ptr<Packet const>, MacPacketStatus> (packet, status));
+</div><div>@@ -67,7 +66,7 @@
+</div><div>                                                   Ptr<Packet> packet)
+</div><div>   NS_LOG_INFO ("Finished retransmission attempts for a packet");
+</div><div class="minus">-  NS_LOG_DEBUG ("Packet: " << packet << "ReqTx " << unsigned(reqTx) <<
+</div><div class="plus">+  NS_LOG_DEBUG ("Packet: " << packet << " ReqTx " << unsigned(reqTx) <<
+</div><div>                 ", succ: " << success << ", firstAttempt: " <<
+</div><div>                 firstAttempt.GetSeconds ());
+</div><div class="diff">diff -bur lorawan/helper/lorawan-mac-helper.cc lorawan-tdma/helper/lorawan-mac-helper.cc
+</div><div class="minus">--- lorawan/helper/lorawan-mac-helper.cc	2020-07-07 09:46:11.295592849 +0300
+</div><div class="plus">+++ lorawan-tdma/helper/lorawan-mac-helper.cc	2020-07-07 09:46:34.627147033 +0300
+</div><div>@@ -70,6 +70,10 @@
+</div><div>   m_region = region;
+</div><div class="plus">+void LorawanMacHelper::SetRetransMax(uint16_t rtx){
+</div><div class="plus">+	retransMax=rtx;
+</div><div class="plus">+}
+</div><div> Ptr<LorawanMac>
+</div><div> LorawanMacHelper::Create (Ptr<Node> node, Ptr<NetDevice> device) const
+</div><div>@@ -80,6 +84,7 @@
+</div><div>   if (m_deviceType == ED_A && m_addrGen != 0)
+</div><div>       mac->GetObject<ClassAEndDeviceLorawanMac> ()->SetDeviceAddress (m_addrGen->NextAddress ());
+</div><div class="plus">+      mac->GetObject<ClassAEndDeviceLorawanMac> ()->SetRetransMax (retransMax);
+</div><div>   // Add a basic list of channels based on the region where the device is
+</div><div class="diff">diff -bur lorawan/helper/lorawan-mac-helper.h lorawan-tdma/helper/lorawan-mac-helper.h
+</div><div class="minus">--- lorawan/helper/lorawan-mac-helper.h	2020-07-07 09:46:11.295592849 +0300
+</div><div class="plus">+++ lorawan-tdma/helper/lorawan-mac-helper.h	2020-07-07 09:46:34.627147033 +0300
+</div><div>@@ -105,6 +105,7 @@
+</div><div>   static std::vector<int> SetSpreadingFactorsGivenDistribution (NodeContainer endDevices,
+</div><div>                                                                 NodeContainer gateways,
+</div><div>                                                                 std::vector<double> distribution);
+</div><div class="plus">+  void SetRetransMax(uint16_t rtx);
+</div><div> private:
+</div><div>   /**
+</div><div>@@ -143,6 +144,7 @@
+</div><div>   Ptr<LoraDeviceAddressGenerator> m_addrGen; //!< Pointer to the address generator to use
+</div><div>   enum DeviceType m_deviceType; //!< The kind of device to install
+</div><div>   enum Regions m_region; //!< The region in which the device will operate
+</div><div class="plus">+  uint16_t retransMax;
+</div><div> };
+</div><div> } // namespace lorawan
+</div><div class="diff">diff -bur lorawan/helper/periodic-sender-helper.cc lorawan-tdma/helper/periodic-sender-helper.cc
+</div><div class="minus">--- lorawan/helper/periodic-sender-helper.cc	2020-07-07 09:46:11.295592849 +0300
+</div><div class="plus">+++ lorawan-tdma/helper/periodic-sender-helper.cc	2020-07-07 09:46:34.627147033 +0300
+</div><div>@@ -61,25 +61,26 @@
+</div><div> ApplicationContainer
+</div><div class="minus">-PeriodicSenderHelper::Install (Ptr<Node> node) const
+</div><div class="plus">+PeriodicSenderHelper::Install (Ptr<Node> node, uint16_t start_time) const
+</div><div class="minus">-  return ApplicationContainer (InstallPriv (node));
+</div><div class="plus">+  return ApplicationContainer (InstallPriv (node, start_time));
+</div><div> ApplicationContainer
+</div><div class="minus">-PeriodicSenderHelper::Install (NodeContainer c) const
+</div><div class="plus">+PeriodicSenderHelper::Install (NodeContainer c, uint16_t start_times[]) const
+</div><div>   ApplicationContainer apps;
+</div><div class="plus">+  uint16_t counter(0);
+</div><div>   for (NodeContainer::Iterator i = c.Begin (); i != c.End (); ++i)
+</div><div class="minus">-      apps.Add (InstallPriv (*i));
+</div><div class="plus">+      apps.Add (InstallPriv (*i, start_times[counter++]));
+</div><div>   return apps;
+</div><div> Ptr<Application>
+</div><div class="minus">-PeriodicSenderHelper::InstallPriv (Ptr<Node> node) const
+</div><div class="plus">+PeriodicSenderHelper::InstallPriv (Ptr<Node> node, uint16_t start_time) const
+</div><div>   NS_LOG_FUNCTION (this << node);
+</div><div>@@ -118,7 +119,8 @@
+</div><div>   NS_LOG_DEBUG ("Created an application with interval = " <<
+</div><div>                 interval.GetHours () << " hours");
+</div><div class="minus">-  app->SetInitialDelay (Seconds (m_initialDelay->GetValue (0, interval.GetSeconds ())));
+</div><div class="plus">+//  app->SetInitialDelay (Seconds (m_initialDelay->GetValue (0, interval.GetSeconds ())));
+</div><div class="plus">+  app->SetInitialDelay(Seconds(start_time));
+</div><div>   app->SetPacketSize (m_pktSize);
+</div><div>   if (m_pktSizeRV)
+</div><div class="diff">diff -bur lorawan/helper/periodic-sender-helper.h lorawan-tdma/helper/periodic-sender-helper.h
+</div><div class="minus">--- lorawan/helper/periodic-sender-helper.h	2020-07-07 09:46:11.295592849 +0300
+</div><div class="plus">+++ lorawan-tdma/helper/periodic-sender-helper.h	2020-07-07 09:46:34.627147033 +0300
+</div><div>@@ -47,9 +47,9 @@
+</div><div>   void SetAttribute (std::string name, const AttributeValue &value);
+</div><div class="minus">-  ApplicationContainer Install (NodeContainer c) const;
+</div><div class="plus">+  ApplicationContainer Install (NodeContainer c, uint16_t start_times[]) const;
+</div><div class="minus">-  ApplicationContainer Install (Ptr<Node> node) const;
+</div><div class="plus">+  ApplicationContainer Install (Ptr<Node> node, uint16_t start_time) const;
+</div><div>   /**
+</div><div>    * Set the period to be used by the applications created by this helper.
+</div><div>@@ -67,7 +67,7 @@
+</div><div> private:
+</div><div class="minus">-  Ptr<Application> InstallPriv (Ptr<Node> node) const;
+</div><div class="plus">+  Ptr<Application> InstallPriv (Ptr<Node> node, uint16_t start_time) const;
+</div><div>   ObjectFactory m_factory;
+</div><div>Only in lorawan-tdma/helper: tdma-helper.cc
+</div><div>Only in lorawan-tdma/helper: tdma-helper.h
+</div><div>Only in lorawan-tdma/helper: tdma-sender-helper.cc
+</div><div>Only in lorawan-tdma/helper: tdma-sender-helper.h
+</div><div class="diff">diff -bur lorawan/model/class-a-end-device-lorawan-mac.cc lorawan-tdma/model/class-a-end-device-lorawan-mac.cc
+</div><div class="minus">--- lorawan/model/class-a-end-device-lorawan-mac.cc	2020-07-07 09:46:11.295592849 +0300
+</div><div class="plus">+++ lorawan-tdma/model/class-a-end-device-lorawan-mac.cc	2020-07-07 09:46:34.627147033 +0300
+</div><div>@@ -127,9 +127,10 @@
+</div><div>   // Instruct the PHY on the right Spreading Factor to listen for during the window
+</div><div>   // create a SetReplyDataRate function?
+</div><div>   uint8_t replyDataRate = GetFirstReceiveWindowDataRate ();
+</div><div class="minus">-  NS_LOG_DEBUG ("m_dataRate: " << unsigned (m_dataRate) <<
+</div><div class="plus">+  /*NS_LOG_DEBUG ("m_dataRate: " << unsigned (m_dataRate) <<
+</div><div>                 ", m_rx1DrOffset: " << unsigned (m_rx1DrOffset) <<
+</div><div class="minus">-                ", replyDataRate: " << unsigned (replyDataRate) << ".");
+</div><div class="plus">+                ", replyDataRate: " << unsigned (replyDataRate) << ".");*/
+</div><div class="plus">+  NS_LOG_DEBUG ("m_dataRate: " << unsigned (m_dataRate));
+</div><div>   m_phy->GetObject<EndDeviceLoraPhy> ()->SetSpreadingFactor
+</div><div>     (GetSfFromDataRate (replyDataRate));
+</div><div>@@ -262,12 +263,20 @@
+</div><div class="plus">+void ClassAEndDeviceLorawanMac::SetRetransMax(uint16_t rtx){
+</div><div class="plus">+	m_maxRetrans=rtx;
+</div><div class="plus">+}
+</div><div> void
+</div><div> ClassAEndDeviceLorawanMac::TxFinished (Ptr<const Packet> packet)
+</div><div>   NS_LOG_FUNCTION_NOARGS ();
+</div><div class="plus">+  NS_LOG_INFO ("Max Retransmit: " << m_maxRetrans);
+</div><div class="plus">+  /*
+</div><div class="plus">+   * If m_maxNumbTx = 0 means disable retransmission
+</div><div class="plus">+   */
+</div><div class="plus">+  if (m_maxRetrans > 0){
+</div><div>   // Schedule the opening of the first receive window
+</div><div>   Simulator::Schedule (m_receiveDelay1,
+</div><div>                        &ClassAEndDeviceLorawanMac::OpenFirstReceiveWindow, this);
+</div><div>@@ -284,7 +293,7 @@
+</div><div>   // m_secondReceiveWindow = Simulator::Schedule (m_receiveDelay2,
+</div><div>   //                                              &ClassAEndDeviceLorawanMac::OpenSecondReceiveWindow,
+</div><div>   //                                              this);
+</div><div class="plus">+  }
+</div><div>   // Switch the PHY to sleep
+</div><div>   m_phy->GetObject<EndDeviceLoraPhy> ()->SwitchToSleep ();
+</div><div>@@ -519,6 +528,8 @@
+</div><div> // MAC command methods //
+</div><div> /////////////////////////
+</div><div> void
+</div><div> ClassAEndDeviceLorawanMac::OnRxClassParamSetupReq (Ptr<RxParamSetupReq> rxParamSetupReq)
+</div><div class="diff">diff -bur lorawan/model/class-a-end-device-lorawan-mac.h lorawan-tdma/model/class-a-end-device-lorawan-mac.h
+</div><div class="minus">--- lorawan/model/class-a-end-device-lorawan-mac.h	2020-07-07 09:46:11.295592849 +0300
+</div><div class="plus">+++ lorawan-tdma/model/class-a-end-device-lorawan-mac.h	2020-07-07 09:46:34.627147033 +0300
+</div><div>@@ -162,6 +162,11 @@
+</div><div>    */
+</div><div>   virtual void OnRxClassParamSetupReq (Ptr<RxParamSetupReq> rxParamSetupReq);
+</div><div class="plus">+  /*
+</div><div class="plus">+   * Set retransmission or 0 to disable
+</div><div class="plus">+   */
+</div><div class="plus">+  void SetRetransMax(uint16_t rtx);
+</div><div> private:
+</div><div>   /**
+</div><div>@@ -213,6 +218,8 @@
+</div><div>    */
+</div><div>   uint8_t m_rx1DrOffset;
+</div><div class="plus">+  uint16_t m_maxRetrans;
+</div><div> }; /* ClassAEndDeviceLorawanMac */
+</div><div> } /* namespace lorawan */
+</div><div> } /* namespace ns3 */
+</div><div class="diff">diff -bur lorawan/model/lora-phy.cc lorawan-tdma/model/lora-phy.cc
+</div><div class="minus">--- lorawan/model/lora-phy.cc	2020-07-07 09:46:11.299592770 +0300
+</div><div class="plus">+++ lorawan-tdma/model/lora-phy.cc	2020-07-07 09:46:34.631146958 +0300
+</div><div>@@ -167,6 +167,7 @@
+</div><div>   // Compute the symbol duration
+</div><div>   // Bandwidth is in Hz
+</div><div>   double tSym = pow (2, int(txParams.sf)) / (txParams.bandwidthHz);
+</div><div class="plus">+  NS_LOG_DEBUG("tSym: " << tSym);
+</div><div>   // Compute the preamble duration
+</div><div>   double tPreamble = (double(txParams.nPreamble) + 4.25) * tSym;
+</div><div>@@ -193,7 +194,7 @@
+</div><div>   NS_LOG_DEBUG ("Time computation: num = " << num << ", den = " << den <<
+</div><div>                 ", payloadSymbNb = " << payloadSymbNb << ", tSym = " << tSym);
+</div><div class="minus">-  NS_LOG_DEBUG ("tPreamble = " << tPreamble);
+</div><div class="plus">+  NS_LOG_DEBUG ("tPreamble.0 = " << tPreamble);
+</div><div>   NS_LOG_DEBUG ("tPayload = " << tPayload);
+</div><div>   NS_LOG_DEBUG ("Total time = " << tPreamble + tPayload);
+</div><div>Only in lorawan-tdma/model: tdma.cc
+</div><div>Only in lorawan-tdma/model: tdma.h
+</div><div>Only in lorawan-tdma/model: tdma-sender.cc
+</div><div>Only in lorawan-tdma/model: tdma-sender.h
+</div><div class="diff">diff -bur lorawan/README.md lorawan-tdma/README.md
+</div><div class="minus">--- lorawan/README.md	2020-07-07 09:46:11.291592926 +0300
+</div><div class="plus">+++ lorawan-tdma/README.md	2020-07-07 09:46:34.623147107 +0300
+</div><div>@@ -1,119 +1,20 @@
+</div><div class="minus">-# LoRaWAN ns-3 module #
+</div><div class="plus">+# LoRaWAN TDMA ns-3 module #
+</div><div class="minus">-[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/ns-3-lorawan)
+</div><div class="minus">-[![Build Status](https://travis-ci.org/signetlabdei/lorawan.svg?branch=master)](https://travis-ci.org/signetlabdei/lorawan)
+</div><div class="plus">+- This is addition of TDMA onto LoraWan
+</div><div class="plus">+- Below are changes:
+</div><div class="minus">-This is an [ns-3](https://www.nsnam.org "ns-3 Website") module that can be used
+</div><div class="minus">-to perform simulations of a [LoRaWAN](http://www.lora-alliance.org/technology
+</div><div class="minus">-"LoRa Alliance") network.
+</div><div class="plus">+	- New TDMA files:
+</div><div class="plus">+		1. model/tdma.c
+</div><div class="plus">+		2. model/tdma.h
+</div><div class="plus">+		3. model/tdma-sender.c
+</div><div class="plus">+		4. model/tdma-sender.h
+</div><div class="plus">+		5. helper/tdma-helper.c
+</div><div class="plus">+		6. helper/tdma-helper.h
+</div><div class="plus">+		7. helper/tdma-sender-helper.c
+</div><div class="plus">+		8. helper/tdma-sender-helper.h
+</div><div class="minus">-[API documentation](https://signetlabdei.github.io/lorawan/html/index.html).
+</div><div class="plus">+	- Modified lorawan device configurations:
+</div><div class="plus">+		1. class-a-end-device-lorawan-mac.cc - param to disable retransmission
+</div><div class="minus">-[Module Documentation](https://signetlabdei.github.io/lorawan/models/build/html/lorawan.html).
+</div><div class="minus">-## Getting started ##
+</div><div class="minus">-### Prerequisites ###
+</div><div class="minus">-To run simulations using this module, you will need to install ns-3, and clone
+</div><div class="minus">-this repository inside the `src` directory:
+</div><div class="minus">-```bash
+</div><div class="minus">-git clone https://github.com/nsnam/ns-3-dev-git ns-3
+</div><div class="minus">-git clone https://github.com/signetlabdei/lorawan ns-3/src/lorawan
+</div><div class="minus">-```
+</div><div class="minus">-If you are interested in having the latest features (and more bug-prone code),
+</div><div class="minus">-you can check out the develop branch:
+</div><div class="minus">-```bash
+</div><div class="minus">-cd ns-3/src/lorawan
+</div><div class="minus">-git checkout develop
+</div><div class="minus">-```
+</div><div class="minus">-### Compilation ###
+</div><div class="minus">-If you are interested in only compiling the `lorawan` module and its
+</div><div class="minus">-dependencies, copy the `.ns3rc` file from `ns-3/utils` to `ns-3`, where `ns-3`
+</div><div class="minus">-is your ns-3 installation folder, and only enable the desired module by making
+</div><div class="minus">-sure the file contains the following line:
+</div><div class="minus">-```python
+</div><div class="minus">-modules_enabled = ['lorawan']
+</div><div class="minus">-```
+</div><div class="minus">-To compile, move to the `ns-3` folder, configure and then build ns-3:
+</div><div class="minus">-```bash
+</div><div class="minus">-./waf configure --enable-tests --enable-examples
+</div><div class="minus">-./waf build
+</div><div class="minus">-```
+</div><div class="minus">-Finally, make sure tests run smoothly with:
+</div><div class="minus">-```bash
+</div><div class="minus">-./test.py -s lorawan
+</div><div class="minus">-```
+</div><div class="minus">-If the script returns that the lorawan test suite passed, you are good to go.
+</div><div class="minus">-Otherwise, if tests fail or crash, consider filing an issue.
+</div><div class="minus">-## Usage examples ##
+</div><div class="minus">-The module includes the following examples:
+</div><div class="minus">-- `simple-network-example`
+</div><div class="minus">-- `complete-network-example`
+</div><div class="minus">-- `network-server-example`
+</div><div class="minus">-Examples can be run via the `./waf --run example-name` command.
+</div><div class="minus">-## Contributing ##
+</div><div class="minus">-Refer to the [contribution guidelines](.github/CONTRIBUTING.md) for information
+</div><div class="minus">-about how to contribute to this module.
+</div><div class="minus">-## Documentation ##
+</div><div class="minus">-For a complete description of the module, refer to `doc/lorawan.rst`.
+</div><div class="minus">-- [ns-3 tutorial](https://www.nsnam.org/docs/tutorial/html "ns-3 Tutorial")
+</div><div class="minus">-- [ns-3 manual](https://www.nsnam.org/docs/manual/html "ns-3 Manual")
+</div><div class="minus">-- The LoRaWAN specification can be requested at the [LoRa Alliance
+</div><div class="minus">-  website](http://www.lora-alliance.org)
+</div><div class="minus">-## Getting help ##
+</div><div class="minus">-To discuss and get help on how to use this module, you can write to us on [our
+</div><div class="minus">-gitter chat](https://gitter.im/ns-3-lorawan "lorawan Gitter chat").
+</div><div class="minus">-## Authors ##
+</div><div class="minus">-- Davide Magrin
+</div><div class="minus">-- Martina Capuzzo
+</div><div class="minus">-- Stefano Romagnolo
+</div><div class="minus">-- Michele Luvisotto
+</div><div class="minus">-## License ##
+</div><div class="minus">-This software is licensed under the terms of the GNU GPLv2 (the same license
+</div><div class="minus">-that is used by ns-3). See the LICENSE.md file for more details.
+</div><div class="minus">-## Acknowledgments and relevant publications ##
+</div><div class="minus">-The initial version of this code was developed as part of a master's thesis at
+</div><div class="minus">-the [University of Padova](https://unipd.it "Unipd homepage"), under the
+</div><div class="minus">-supervision of Prof. Lorenzo Vangelista, Prof. Michele Zorzi and with the help
+</div><div class="minus">-of Marco Centenaro.
+</div><div class="minus">-Publications:
+</div><div class="minus">-- D. Magrin, M. Capuzzo and A. Zanella, "A Thorough Study of LoRaWAN Performance Under Different
+</div><div class="minus">-  Parameter Settings," in IEEE Internet of Things Journal. 2019.
+</div><div class="minus">-  [Link](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8863372&isnumber=6702522).
+</div><div class="minus">-- M. Capuzzo, D. Magrin and A. Zanella, "Confirmed traffic in LoRaWAN: Pitfalls
+</div><div class="minus">-  and countermeasures," 2018 17th Annual Mediterranean Ad Hoc Networking
+</div><div class="minus">-  Workshop (Med-Hoc-Net), Capri, 2018. [Link](https://ieeexplore.ieee.org/abstract/document/8407095).
+</div><div class="minus">-- D. Magrin, M. Centenaro and L. Vangelista, "Performance evaluation of LoRa
+</div><div class="minus">-  networks in a smart city scenario," 2017 IEEE International Conference On
+</div><div class="minus">-  Communications (ICC), Paris, 2017. [Link](http://ieeexplore.ieee.org/document/7996384/).
+</div><div class="minus">-- Network level performances of a LoRa system (Master thesis). [Link](http://tesi.cab.unipd.it/53740/1/dissertation.pdf).
+</div><div class="diff">diff -bur lorawan/wscript lorawan-tdma/wscript
+</div><div class="minus">--- lorawan/wscript	2020-07-07 09:46:11.303592692 +0300
+</div><div class="plus">+++ lorawan-tdma/wscript	2020-07-07 09:46:34.635146883 +0300
+</div><div>@@ -7,7 +7,7 @@
+</div><div> #     conf.check_nonfatal(header_name='stdint.h', define_name='HAVE_STDINT_H')
+</div><div> def build(bld):
+</div><div class="minus">-    module = bld.create_ns3_module('lorawan', ['core', 'network',
+</div><div class="plus">+    module = bld.create_ns3_module('lorawan-tdma', ['core', 'network',
+</div><div>                                                'propagation', 'mobility',
+</div><div>                                                'point-to-point', 'energy',
+</div><div>                                                'buildings'])
+</div><div>@@ -50,6 +50,8 @@
+</div><div>         'model/lora-utils.cc',
+</div><div>         'model/adr-component.cc',
+</div><div>         'model/hex-grid-position-allocator.cc',
+</div><div class="plus">+        'model/tdma.cc',
+</div><div class="plus">+        'model/tdma-sender.cc',
+</div><div>         'helper/lora-radio-energy-model-helper.cc',
+</div><div>         'helper/lora-helper.cc',
+</div><div>         'helper/lora-phy-helper.cc',
+</div><div>@@ -59,6 +61,8 @@
+</div><div>         'helper/forwarder-helper.cc',
+</div><div>         'helper/network-server-helper.cc',
+</div><div>         'helper/lora-packet-tracker.cc',
+</div><div class="plus">+        'helper/tdma-helper.cc',
+</div><div class="plus">+        'helper/tdma-sender-helper.cc',
+</div><div>         'test/utilities.cc',
+</div><div>@@ -71,7 +75,7 @@
+</div><div>     headers = bld(features='ns3header')
+</div><div class="minus">-    headers.module = 'lorawan'
+</div><div class="plus">+    headers.module = 'lorawan-tdma'
+</div><div>     headers.source = [
+</div><div>         'model/lora-net-device.h',
+</div><div>         'model/lorawan-mac.h',
+</div><div>@@ -111,6 +115,8 @@
+</div><div>         'model/lora-utils.h',
+</div><div>         'model/adr-component.h',
+</div><div>         'model/hex-grid-position-allocator.h',
+</div><div class="plus">+        'model/tdma.h',
+</div><div class="plus">+        'model/tdma-sender.h',
+</div><div>         'helper/lora-radio-energy-model-helper.h',
+</div><div>         'helper/lora-helper.h',
+</div><div>         'helper/lora-phy-helper.h',
+</div><div>@@ -120,6 +126,8 @@
+</div><div>         'helper/forwarder-helper.h',
+</div><div>         'helper/network-server-helper.h',
+</div><div>         'helper/lora-packet-tracker.h',
+</div><div class="plus">+        'helper/tdma-helper.h',
+</div><div class="plus">+        'helper/tdma-sender-helper.h',
+</div><div>         'test/utilities.h',
+</div></body></html>

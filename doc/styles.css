@@ -1,0 +1,26 @@
+body{
+	border-left: 2px solid #3333FF;
+	border-right: 2px solid #3333FF;
+	border-bottom: 2px solid #3333FF;
+	margin: 0 1rem 1rem;
+	font-size: 12px;
+}
+
+div {
+	padding: .4rem .2rem;
+	margin: 0 .4rem;
+}
+div.diff {
+	background: #3333FF;
+	padding: .4rem .2rem;
+	margin: .4rem 0;
+	color: #e2e2e2;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+div.plus {
+	background: #33FF33;
+}
+div.minus {
+	background: #FF3333;
+}
