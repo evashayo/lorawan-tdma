@@ -51,7 +51,12 @@ namespace ns3
                         "The reference loss at distance d0 (dB). (Default is Friis at 1m with 5.15 GHz)",
                         DoubleValue (46.6777),
                         MakeDoubleAccessor (&IndustrialLinkLossModel::m_referenceLoss),
-                        MakeDoubleChecker<double> ());
+                        MakeDoubleChecker<double> ())
+            .AddAttribute ("LossDueToShadowing",
+                        "Loss due to shadowing",
+                        DoubleValue (3.80),
+                        MakeDoubleAccessor (&IndustrialLinkLossModel::m_lossDueToShadowing),
+                        MakeDoubleChecker<double> ());;
         return tid;
 
         }
@@ -91,10 +96,12 @@ namespace ns3
             NS_LOG_DEBUG ("IndustrialLinkLossModel distance=" << distance << "m, " << "attenuation=" << pathLossDb << "dB");
 
             //TODONS3: 
-            //1. Add coefiecient on Path Loss
-            //2. - Fadding (F) factor from Resulting Rx
+            //1. Add coefiecient on Path Loss (SIGMA) = m_lossDueToShadowing
+            //2. - Fadding (F) factor from Resulting Rx = 50dB
             //3. + G(tx)
             //4. + G(rx)
+
+            pathLossDb = pathLossDb + m_lossDueToShadowing - 50 + 3 + 9;
             
             return txPowerDbm - pathLossDb;
         }

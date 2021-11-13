@@ -243,7 +243,7 @@ namespace ns3
 			NS_LOG_INFO("Data Tx Time....................................." << dataTxTime << " >> " << (ts + dataTxTime));
 			Simulator::Cancel(m_sendEvent);
 			// Schedule data Transmission
-			//m_sendEvent = Simulator::Schedule(Seconds(dataTxTime), &TDMASender::ScheduleReach, this);
+			m_sendEvent = Simulator::Schedule(Seconds(dataTxTime), &TDMASender::ScheduleReach, this);
 			Ptr<ClassAEndDeviceLorawanMac> edMac = m_mac->GetObject<ClassAEndDeviceLorawanMac> ();
 			edMac->ForceDeviceSleep();
 		}

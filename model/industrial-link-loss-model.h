@@ -50,6 +50,7 @@ namespace ns3
     double m_exponent1; //!< The exponent for the second field.
 
     double m_referenceLoss; //!< The reference loss at distance d0 (dB).
+    double m_lossDueToShadowing; //!< The reference loss at distance d0 (dB).
     };
   }
 }

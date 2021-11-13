@@ -365,6 +365,8 @@ LorawanMacHelper::SetSpreadingFactorsUp (NodeContainer endDevices, NodeContainer
   std::vector<int> sfQuantity (7, 0);
   for (NodeContainer::Iterator j = endDevices.Begin (); j != endDevices.End (); ++j)
     {
+      //TODONS3
+      //Find different SF assignment for Industrial and Non Industrial (default)
       Ptr<Node> object = *j;
       Ptr<MobilityModel> position = object->GetObject<MobilityModel> ();
       NS_ASSERT (position != 0);
@@ -379,6 +381,7 @@ LorawanMacHelper::SetSpreadingFactorsUp (NodeContainer endDevices, NodeContainer
       // Try computing the distance from each gateway and find the best one
       Ptr<Node> bestGateway = gateways.Get (0);
       Ptr<MobilityModel> bestGatewayPosition = bestGateway->GetObject<MobilityModel> ();
+      NS_LOG_INFO("Position_GW: " << bestGatewayPosition->GetPosition());
 
       // Assume devices transmit at 14 dBm
       double highestRxPower = channel->GetRxPower (14, position, bestGatewayPosition);
@@ -412,47 +415,53 @@ LorawanMacHelper::SetSpreadingFactorsUp (NodeContainer endDevices, NodeContainer
 
       if (rxPower > *edSensitivity)
         {
-          NS_LOG_INFO("Data Rate: 5; " << *edSensitivity);
+          NS_LOG_INFO("Data Rate: 5(SF7); " << *edSensitivity);
           mac->SetDataRate (5);
           sfQuantity[0] = sfQuantity[0] + 1;
+          NS_LOG_INFO("sfQuantity[0]: " << sfQuantity[0]);
         }
       else if (rxPower > *(edSensitivity + 1))
         {
-          NS_LOG_INFO("Data Rate: 4; " << *(edSensitivity + 1));
+          NS_LOG_INFO("Data Rate: 4(SF8); " << *(edSensitivity + 1));
           mac->SetDataRate (4);
           sfQuantity[1] = sfQuantity[1] + 1;
+          NS_LOG_INFO("sfQuantity[1]: " << sfQuantity[1]);
         }
       else if (rxPower > *(edSensitivity + 2))
         {
-          NS_LOG_INFO("Data Rate: 3; " << *(edSensitivity + 2));
+          NS_LOG_INFO("Data Rate: 3(SF9); " << *(edSensitivity + 2));
           mac->SetDataRate (3);
           sfQuantity[2] = sfQuantity[2] + 1;
+          NS_LOG_INFO("sfQuantity[2]: " << sfQuantity[2]);
         }
       else if (rxPower > *(edSensitivity + 3))
         {
-          NS_LOG_INFO("Data Rate: 2; " << *(edSensitivity + 3));
+          NS_LOG_INFO("Data Rate: 2(SF10); " << *(edSensitivity + 3));
           mac->SetDataRate (2);
           sfQuantity[3] = sfQuantity[3] + 1;
+          NS_LOG_INFO("sfQuantity[3]: " << sfQuantity[3]);
         }
       else if (rxPower > *(edSensitivity + 4))
         {
-          NS_LOG_INFO("Data Rate: 1; " << *(edSensitivity + 4));
+          NS_LOG_INFO("Data Rate: 1(SF11); " << *(edSensitivity + 4));
           mac->SetDataRate (1);
           sfQuantity[4] = sfQuantity[4] + 1;
+          NS_LOG_INFO("sfQuantity[4]: " << sfQuantity[4]);
         }
       else if (rxPower > *(edSensitivity + 5))
         {
-          NS_LOG_INFO("Data Rate: 0; " << *(edSensitivity + 5));
+          NS_LOG_INFO("Data Rate: 0(SF12); " << *(edSensitivity + 5));
           mac->SetDataRate (0);
           sfQuantity[5] = sfQuantity[5] + 1;
+          NS_LOG_INFO("sfQuantity[5]: " << sfQuantity[5]);
         }
       else // Device is out of range. Assign SF12.
         {
           // NS_LOG_DEBUG ("Device out of range");
-          NS_LOG_INFO("Data Rate: 0 out of range");
+          NS_LOG_INFO("Data Rate: 0 out of range (SF12)");
           mac->SetDataRate (0);
           sfQuantity[6] = sfQuantity[6] + 1;
-          // NS_LOG_DEBUG ("sfQuantity[6] = " << sfQuantity[6]);
+          NS_LOG_INFO("sfQuantity[6]: " << sfQuantity[6]);
         }
 
       /*

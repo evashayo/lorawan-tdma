@@ -158,7 +158,7 @@ namespace ns3
           NS_LOG_INFO("Frame Pos: " << m_frame_pos[sf_idx] << ", For SF: " << m_sf);
           uint8_t slot_size_sync = 20; //1 second as slot size
           //TODONS3
-          //Formula for slot_size_sync for data transmission
+          //Formula for slot_size_sync for sync transmission
 
           uint8_t slot_size_data = 1; //1 second as slot size
           //TODONS3
