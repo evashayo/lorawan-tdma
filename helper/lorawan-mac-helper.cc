@@ -386,134 +386,127 @@ LorawanMacHelper::SetSpreadingFactorsUp (NodeContainer endDevices, NodeContainer
       // Assume devices transmit at 14 dBm
       double highestRxPower = channel->GetRxPower (14, position, bestGatewayPosition);
 
-      for (NodeContainer::Iterator currentGw = gateways.Begin () + 1; currentGw != gateways.End ();
-           ++currentGw)
-        {
-          // Compute the power received from the current gateway
-          Ptr<Node> curr = *currentGw;
-          Ptr<MobilityModel> currPosition = curr->GetObject<MobilityModel> ();
-          double currentRxPower = channel->GetRxPower (14, position, currPosition); // dBm
+      if (highestRxPower == 99999){
+        //FREE {Assuming only 1 Gw}
+        NS_LOG_INFO("FREE model");
+        NS_LOG_INFO("Position_GW: " << bestGatewayPosition->GetPosition());
+        double distance = position->GetDistanceFrom (bestGatewayPosition);
+        if (distance <= 2300){
+            NS_LOG_INFO("Data Rate: 5(SF7); " << distance);
+            mac->SetDataRate (5);
+            sfQuantity[0] = sfQuantity[0] + 1;
+            NS_LOG_INFO("sfQuantity[0]: " << sfQuantity[0]);
+        }else if (distance <= 2600){
+            NS_LOG_INFO("Data Rate: 4(SF8); " << distance);
+            mac->SetDataRate (4);
+            sfQuantity[1] = sfQuantity[1] + 1;
+            NS_LOG_INFO("sfQuantity[1]: " << sfQuantity[1]);
+        }else if (distance <= 3050){
+            NS_LOG_INFO("Data Rate: 3(SF9); " << distance);
+            mac->SetDataRate (3);
+            sfQuantity[2] = sfQuantity[2] + 1;
+            NS_LOG_INFO("sfQuantity[2]: " << sfQuantity[2]);
+        }else if (distance <= 3600){
+            NS_LOG_INFO("Data Rate: 2(SF10); " << distance);
+            mac->SetDataRate (2);
+            sfQuantity[3] = sfQuantity[3] + 1;
+            NS_LOG_INFO("sfQuantity[3]: " << sfQuantity[3]);
+        }else if (distance <= 4500){
+            NS_LOG_INFO("Data Rate: 1(SF11); " << distance);
+            mac->SetDataRate (1);
+            sfQuantity[4] = sfQuantity[4] + 1;
+            NS_LOG_INFO("sfQuantity[4]: " << sfQuantity[4]);
+        }else if (distance <= 6100){
+            NS_LOG_INFO("Data Rate: 0(SF12); " << distance);
+            mac->SetDataRate (0);
+            sfQuantity[5] = sfQuantity[5] + 1;
+            NS_LOG_INFO("sfQuantity[5]: " << sfQuantity[5]);
+        }else{
+            NS_LOG_INFO("Data Rate: 0 out of range (SF12)");
+            mac->SetDataRate (0);
+            sfQuantity[6] = sfQuantity[6] + 1;
+            NS_LOG_INFO("sfQuantity[6]: " << sfQuantity[6]);
+        }
+      }else{
+        NS_LOG_INFO("Other model");
+        for (NodeContainer::Iterator currentGw = gateways.Begin () + 1; currentGw != gateways.End ();
+            ++currentGw)
+          {
+            // Compute the power received from the current gateway
+            Ptr<Node> curr = *currentGw;
+            Ptr<MobilityModel> currPosition = curr->GetObject<MobilityModel> ();
+            double currentRxPower = channel->GetRxPower (14, position, currPosition); // dBm
 
-          if (currentRxPower > highestRxPower)
-            {
-              bestGateway = curr;
-              bestGatewayPosition = curr->GetObject<MobilityModel> ();
-              highestRxPower = currentRxPower;
-            }
-        }
+            if (currentRxPower > highestRxPower)
+              {
+                bestGateway = curr;
+                bestGatewayPosition = curr->GetObject<MobilityModel> ();
+                highestRxPower = currentRxPower;
+              }
+          }
 
-      NS_LOG_INFO("Position_GW: " << bestGatewayPosition->GetPosition());
+        NS_LOG_INFO("Position_GW: " << bestGatewayPosition->GetPosition());
 
-      // NS_LOG_DEBUG ("Rx Power: " << highestRxPower);
-      double rxPower = highestRxPower;
-      NS_LOG_INFO("RxPower: " << rxPower);
-      
+        // NS_LOG_DEBUG ("Rx Power: " << highestRxPower);
+        double rxPower = highestRxPower;
+        NS_LOG_INFO("RxPower: " << rxPower);
+        
 
-      // Get the ED sensitivity
-      Ptr<EndDeviceLoraPhy> edPhy = loraNetDevice->GetPhy ()->GetObject<EndDeviceLoraPhy> ();
-      const double *edSensitivity = edPhy->sensitivity;
+        // Get the ED sensitivity
+        Ptr<EndDeviceLoraPhy> edPhy = loraNetDevice->GetPhy ()->GetObject<EndDeviceLoraPhy> ();
+        const double *edSensitivity = edPhy->sensitivity;
 
-      if (rxPower > *edSensitivity)
-        {
-          NS_LOG_INFO("Data Rate: 5(SF7); " << *edSensitivity);
-          mac->SetDataRate (5);
-          sfQuantity[0] = sfQuantity[0] + 1;
-          NS_LOG_INFO("sfQuantity[0]: " << sfQuantity[0]);
-        }
-      else if (rxPower > *(edSensitivity + 1))
-        {
-          NS_LOG_INFO("Data Rate: 4(SF8); " << *(edSensitivity + 1));
-          mac->SetDataRate (4);
-          sfQuantity[1] = sfQuantity[1] + 1;
-          NS_LOG_INFO("sfQuantity[1]: " << sfQuantity[1]);
-        }
-      else if (rxPower > *(edSensitivity + 2))
-        {
-          NS_LOG_INFO("Data Rate: 3(SF9); " << *(edSensitivity + 2));
-          mac->SetDataRate (3);
-          sfQuantity[2] = sfQuantity[2] + 1;
-          NS_LOG_INFO("sfQuantity[2]: " << sfQuantity[2]);
-        }
-      else if (rxPower > *(edSensitivity + 3))
-        {
-          NS_LOG_INFO("Data Rate: 2(SF10); " << *(edSensitivity + 3));
-          mac->SetDataRate (2);
-          sfQuantity[3] = sfQuantity[3] + 1;
-          NS_LOG_INFO("sfQuantity[3]: " << sfQuantity[3]);
-        }
-      else if (rxPower > *(edSensitivity + 4))
-        {
-          NS_LOG_INFO("Data Rate: 1(SF11); " << *(edSensitivity + 4));
-          mac->SetDataRate (1);
-          sfQuantity[4] = sfQuantity[4] + 1;
-          NS_LOG_INFO("sfQuantity[4]: " << sfQuantity[4]);
-        }
-      else if (rxPower > *(edSensitivity + 5))
-        {
-          NS_LOG_INFO("Data Rate: 0(SF12); " << *(edSensitivity + 5));
-          mac->SetDataRate (0);
-          sfQuantity[5] = sfQuantity[5] + 1;
-          NS_LOG_INFO("sfQuantity[5]: " << sfQuantity[5]);
-        }
-      else // Device is out of range. Assign SF12.
-        {
-          // NS_LOG_DEBUG ("Device out of range");
-          NS_LOG_INFO("Data Rate: 0 out of range (SF12)");
-          mac->SetDataRate (0);
-          sfQuantity[6] = sfQuantity[6] + 1;
-          NS_LOG_INFO("sfQuantity[6]: " << sfQuantity[6]);
-        }
-
-      /*
-
-      // Get the Gw sensitivity
-      Ptr<NetDevice> gatewayNetDevice = bestGateway->GetDevice (0);
-      Ptr<LoraNetDevice> gatewayLoraNetDevice = gatewayNetDevice->GetObject<LoraNetDevice> ();
-      Ptr<GatewayLoraPhy> gatewayPhy = gatewayLoraNetDevice->GetPhy ()->GetObject<GatewayLoraPhy> ();
-      const double *gwSensitivity = gatewayPhy->sensitivity;
-
-      if(rxPower > *gwSensitivity)
-        {
-          mac->SetDataRate (5);
-          sfQuantity[0] = sfQuantity[0] + 1;
-
-        }
-      else if (rxPower > *(gwSensitivity+1))
-        {
-          mac->SetDataRate (4);
-          sfQuantity[1] = sfQuantity[1] + 1;
-
-        }
-      else if (rxPower > *(gwSensitivity+2))
-        {
-          mac->SetDataRate (3);
-          sfQuantity[2] = sfQuantity[2] + 1;
-
-        }
-      else if (rxPower > *(gwSensitivity+3))
-        {
-          mac->SetDataRate (2);
-          sfQuantity[3] = sfQuantity[3] + 1;
-        }
-      else if (rxPower > *(gwSensitivity+4))
-        {
-          mac->SetDataRate (1);
-          sfQuantity[4] = sfQuantity[4] + 1;
-        }
-      else if (rxPower > *(gwSensitivity+5))
-        {
-          mac->SetDataRate (0);
-          sfQuantity[5] = sfQuantity[5] + 1;
-
-        }
-      else // Device is out of range. Assign SF12.
-        {
-          mac->SetDataRate (0);
-          sfQuantity[6] = sfQuantity[6] + 1;
-
-        }
-        */
-
+        if (rxPower > *edSensitivity)
+          {
+            NS_LOG_INFO("Data Rate: 5(SF7); " << *edSensitivity);
+            mac->SetDataRate (5);
+            sfQuantity[0] = sfQuantity[0] + 1;
+            NS_LOG_INFO("sfQuantity[0]: " << sfQuantity[0]);
+          }
+        else if (rxPower > *(edSensitivity + 1))
+          {
+            NS_LOG_INFO("Data Rate: 4(SF8); " << *(edSensitivity + 1));
+            mac->SetDataRate (4);
+            sfQuantity[1] = sfQuantity[1] + 1;
+            NS_LOG_INFO("sfQuantity[1]: " << sfQuantity[1]);
+          }
+        else if (rxPower > *(edSensitivity + 2))
+          {
+            NS_LOG_INFO("Data Rate: 3(SF9); " << *(edSensitivity + 2));
+            mac->SetDataRate (3);
+            sfQuantity[2] = sfQuantity[2] + 1;
+            NS_LOG_INFO("sfQuantity[2]: " << sfQuantity[2]);
+          }
+        else if (rxPower > *(edSensitivity + 3))
+          {
+            NS_LOG_INFO("Data Rate: 2(SF10); " << *(edSensitivity + 3));
+            mac->SetDataRate (2);
+            sfQuantity[3] = sfQuantity[3] + 1;
+            NS_LOG_INFO("sfQuantity[3]: " << sfQuantity[3]);
+          }
+        else if (rxPower > *(edSensitivity + 4))
+          {
+            NS_LOG_INFO("Data Rate: 1(SF11); " << *(edSensitivity + 4));
+            mac->SetDataRate (1);
+            sfQuantity[4] = sfQuantity[4] + 1;
+            NS_LOG_INFO("sfQuantity[4]: " << sfQuantity[4]);
+          }
+        else if (rxPower > *(edSensitivity + 5))
+          {
+            NS_LOG_INFO("Data Rate: 0(SF12); " << *(edSensitivity + 5));
+            mac->SetDataRate (0);
+            sfQuantity[5] = sfQuantity[5] + 1;
+            NS_LOG_INFO("sfQuantity[5]: " << sfQuantity[5]);
+          }
+        else // Device is out of range. Assign SF12.
+          {
+            // NS_LOG_DEBUG ("Device out of range");
+            NS_LOG_INFO("Data Rate: 0 out of range (SF12)");
+            mac->SetDataRate (0);
+            sfQuantity[6] = sfQuantity[6] + 1;
+            NS_LOG_INFO("sfQuantity[6]: " << sfQuantity[6]);
+          }
+      }
     } // end loop on nodes
 
   return sfQuantity;

@@ -105,7 +105,6 @@ namespace ns3
 
       Ptr<LogicalLoraChannel> txChannel = GetChannelForTx();
 
-      NS_LOG_DEBUG("PacketToSend: " << packetToSend);
       m_phy->Send(packetToSend, params, txChannel->GetFrequency(), m_txPower);
 
       //////////////////////////////////////////////

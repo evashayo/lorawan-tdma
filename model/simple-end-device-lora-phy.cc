@@ -23,6 +23,8 @@
 #include "ns3/simulator.h"
 #include "ns3/lora-tag.h"
 #include "ns3/log.h"
+#include "ns3/tdma-rtc-trailer.h"
+#include "ns3/tdma-dev-trailer.h"
 
 namespace ns3 {
 namespace lorawan {
@@ -82,6 +84,15 @@ SimpleEndDeviceLoraPhy::Send (Ptr<Packet> packet, LoraTxParameters txParams,
   // Send the packet over the channel
   NS_LOG_INFO ("Sending the packet in the channel");
   m_channel->Send (this, packet, txPowerDbm, txParams, duration, frequencyMHz);
+
+  Ptr<Packet> packetCopy = packet->Copy();
+  TDMADevTrailer devPart;
+  packetCopy->RemoveTrailer(devPart);
+  // uint64_t m_rtc = rtc.GetRTC();
+  uint64_t m_dev_id = devPart.GetId();
+  // uint64_t m_sf = devPart.GetSF();
+  uint64_t isData = devPart.GetFrameIsData();
+  NS_LOG_INFO("Packet Transmission: " << m_dev_id << ";" << 7 << ";" << isData);
 
   // Schedule the switch back to STANDBY mode.
   // For reference see SX1272 datasheet, section 4.1.6

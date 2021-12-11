@@ -1,6 +1,5 @@
 #include "network-scheduler.h"
 #include "ns3/tdma-rtc-trailer.h"
-#include "ns3/tdma-rtc-trailer.h"
 #include "ns3/lora-utils.h"
 
 namespace ns3
@@ -160,7 +159,7 @@ namespace ns3
           //TODONS3
           //Formula for slot_size_sync for sync transmission
 
-          uint8_t slot_size_data = 1; //1 second as slot size
+          uint8_t slot_size_data = 10; //1 second as slot size
           //TODONS3
           //Formula for slot_size_data for data transmission
 
