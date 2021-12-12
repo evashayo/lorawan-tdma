@@ -60,6 +60,7 @@ namespace ns3
 			m_interval = params.interval;
 			deviceType = params.deviceType;
 			m_syncByDevId = params.mSyncByDevId;
+			m_environ = params.mEnviron;
 		}
 
 		void TDMASender::ScheduleReach(void)
@@ -243,7 +244,11 @@ namespace ns3
 			NS_LOG_INFO("Data Tx Time....................................." << dataTxTime << " >> " << (ts + dataTxTime));
 			Simulator::Cancel(m_sendEvent);
 			// Schedule data Transmission
-			m_sendEvent = Simulator::Schedule(Seconds(dataTxTime), &TDMASender::ScheduleReach, this);
+			if (!(m_environ==2)) // If not sync-only continue data transmission
+			{
+				m_sendEvent = Simulator::Schedule(Seconds(dataTxTime), &TDMASender::ScheduleReach, this);
+			}
+			
 			Ptr<ClassAEndDeviceLorawanMac> edMac = m_mac->GetObject<ClassAEndDeviceLorawanMac> ();
 			edMac->ForceDeviceSleep();
 		}

@@ -23,6 +23,7 @@ namespace ns3
       uint16_t interval;
       uint8_t deviceType;
       uint16_t mSyncByDevId;
+      uint16_t mEnviron;
     };
     class TDMASender : public Application
     {
@@ -66,6 +67,7 @@ namespace ns3
       uint16_t m_interval;
       uint8_t deviceType;
       uint16_t m_syncByDevId;
+      uint16_t m_environ;
 
 
       EventId m_sendEvent;
